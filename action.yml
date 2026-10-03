@@ -1,0 +1,37 @@
+name: incident-kit
+description: Incident management in a GitHub repository. Slash commands on incident issues, on-call, notifications, status page and postmortems.
+author: nuttakulsv
+branding:
+  icon: alert-triangle
+  color: red
+inputs:
+  github-token:
+    description: Token for the GitHub API. The default workflow token works when the workflow grants issues, contents and pull-requests write.
+    default: ${{ github.token }}
+  command:
+    description: handle (default, reacts to issue, comment and schedule events), build-site or report
+    default: handle
+  config:
+    description: Path to the configuration file
+    default: incident-kit.yml
+  output:
+    description: build-site output folder (default _site), or a file to write the report to
+    default: ''
+  days:
+    description: Number of days covered by the report
+    default: '30'
+  demo-data:
+    description: build-site only. JSON file with fictional incidents to add to the page, used by the incident-kit demo
+    default: ''
+outputs:
+  incident:
+    description: Number of the incident issue that was handled
+  state:
+    description: State of the incident after this run
+  changes:
+    description: Comma-separated list of what changed (declared, severity, status, update, resolved)
+  site-changed:
+    description: true when the status page should be rebuilt
+runs:
+  using: node24
+  main: action/index.cjs

@@ -1,0 +1,107 @@
+{
+  "note": "Fictional incidents for a fictional shop. Times are relative to the build time, so the demo page always looks current.",
+  "incidents": [
+    {
+      "number": 42,
+      "title": "[Incident] PromptPay payments failing for some customers",
+      "user": "ploy",
+      "created": "-1h20m",
+      "body": "### Severity\n\nSEV2 - Major: A core feature is degraded for many customers\n\n### Affected services\n\nPayments, Public API\n\n### Public title\n\nSome PromptPay payments are failing\n\n### What is happening?\n\nAbout 18% of PromptPay QR payments time out at the bank callback since the 13:00 deploy. Card payments look fine.\n\n### When did the impact start?\n\n_No response_",
+      "comments": [
+        { "user": "nont", "at": "-1h14m", "body": "/ack\nLooking at the payment gateway dashboards." },
+        {
+          "user": "nont",
+          "at": "-1h05m",
+          "body": "/link https://grafana.example.com/d/payments Payment gateway dashboard\n/update We are investigating failed PromptPay payments. Card payments are not affected."
+        },
+        {
+          "user": "ploy",
+          "at": "-48m",
+          "body": "/note Callback worker pool shrank from 12 to 4 in the 13:00 config change. Rolling back."
+        },
+        {
+          "user": "nont",
+          "at": "-40m",
+          "body": "/status identified\n/update We found the cause, a configuration change in the payment callback service, and are rolling it back. Payments that failed were not charged."
+        },
+        {
+          "user": "nont",
+          "at": "-12m",
+          "body": "/status monitoring\n/update The rollback is complete and new PromptPay payments are succeeding again. We are watching error rates."
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "title": "[Incident] Website down after CDN certificate expired",
+      "user": "mint",
+      "created": "-12d3h",
+      "closed": "-12d1h55m",
+      "body": "### Severity\n\nSEV1 - Critical: Customers cannot use a core feature\n\n### Affected services\n\nWebsite\n\n### Public title\n\nWebsite unavailable\n\n### What is happening?\n\nAll browsers show a certificate error on www. The CDN certificate expired at 09:00.\n\n### When did the impact start?\n\n_No response_",
+      "comments": [
+        { "user": "mint", "at": "-12d2h58m", "body": "/update The website is unavailable. We are working on it." },
+        {
+          "user": "aek",
+          "at": "-12d2h40m",
+          "body": "/status identified\n/update The security certificate for our website expired. We are issuing a new one."
+        },
+        {
+          "user": "aek",
+          "at": "-12d2h20m",
+          "body": "/note Auto-renew was disabled during the DNS migration in March."
+        },
+        {
+          "user": "mint",
+          "at": "-12d2h05m",
+          "body": "/status monitoring\n/update A new certificate is live. Some visitors may need to reload the page."
+        },
+        {
+          "user": "mint",
+          "at": "-12d1h55m",
+          "body": "/status resolved\n/update The website is working normally again."
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "title": "[Incident] LINE order notifications delayed",
+      "user": "ploy",
+      "created": "-39d6h",
+      "closed": "-39d4h30m",
+      "body": "### Severity\n\nSEV3 - Minor: Limited impact, or there is a workaround\n\n### Affected services\n\nLINE notifications\n\n### Public title\n\nLINE order notifications are delayed\n\n### What is happening?\n\nThe LINE push queue is backed up, messages arrive 20 to 40 minutes late. Orders themselves are fine.\n\n### When did the impact start?\n\n_No response_",
+      "comments": [
+        {
+          "user": "ploy",
+          "at": "-39d5h40m",
+          "body": "/status identified\n/update Order confirmations on LINE are arriving late. Orders and payments are not affected."
+        },
+        {
+          "user": "ploy",
+          "at": "-39d4h30m",
+          "body": "/status resolved\n/update The backlog has cleared and notifications are on time again."
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "title": "[Incident] Public API returning 502 errors",
+      "user": "nont",
+      "created": "-71d2h",
+      "closed": "-71d1h10m",
+      "body": "### Severity\n\nSEV2 - Major: A core feature is degraded for many customers\n\n### Affected services\n\nPublic API, Website\n\n### Public title\n\nErrors when loading products and orders\n\n### What is happening?\n\nAround 30% of API requests return 502 from the load balancer.\n\n### When did the impact start?\n\n_No response_",
+      "comments": [
+        {
+          "user": "nont",
+          "at": "-71d1h55m",
+          "body": "/update Some pages fail to load products or orders. We are investigating."
+        },
+        {
+          "user": "mint",
+          "at": "-71d1h30m",
+          "body": "/status monitoring\n/update We added capacity and errors have stopped. We are monitoring."
+        },
+        { "user": "nont", "at": "-71d1h10m", "body": "/resolve\n/update Everything is back to normal." }
+      ]
+    }
+  ]
+}

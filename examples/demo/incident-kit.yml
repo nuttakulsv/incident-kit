@@ -1,0 +1,31 @@
+# Demo configuration for the fictional "Acme Shop". Used by `npm run demo` and the README images.
+title: Acme Shop status
+description: Live status of Acme Shop services
+url: https://nuttakulsv.github.io/incident-kit
+lang: en
+timezone: Asia/Bangkok
+
+services:
+  - id: website
+    name: Website
+  - id: api
+    name: Public API
+  - id: payments
+    name: Payments
+    description: PromptPay and cards
+  - id: line
+    name: LINE notifications
+
+severity:
+  reminders: { 1: 15, 2: 30 }
+  public: [1, 2, 3]
+  postmortem: [1, 2]
+
+oncall:
+  rotation: [ploy, nont, mint]
+  start: 2026-01-05
+  handoff: '10:00'
+  overrides:
+    - user: aek
+      from: 2026-10-24
+      to: 2026-10-27

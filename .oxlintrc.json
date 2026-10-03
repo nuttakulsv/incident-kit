@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["dist", "action/index.cjs", "site"],
+  "rules": {
+    "no-unused-vars": "error",
+    "eqeqeq": "error"
+  }
+}

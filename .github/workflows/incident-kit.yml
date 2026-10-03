@@ -1,0 +1,64 @@
+# incident-kit running on its own repository, from the code in this checkout.
+# Your own repository uses the workflow in template/ instead, with `uses: nuttakulsv/incident-kit@v0`.
+name: Incidents
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '*/30 * * * *'
+    - cron: '5 17 * * *'
+  push:
+    branches: [main]
+    paths: [incident-kit.yml, examples/demo/**, action/**]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: incident-kit-${{ github.event.issue.number || 'schedule' }}
+  cancel-in-progress: false
+
+jobs:
+  incident:
+    if: github.event_name != 'push' && !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    outputs:
+      site-changed: ${{ steps.kit.outputs.site-changed }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: kit
+        uses: ./
+
+  status-page:
+    needs: incident
+    if: always() && (needs.incident.outputs.site-changed == 'true' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.schedule == '5 17 * * *')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./
+        with:
+          command: build-site
+          demo-data: examples/demo/incidents.json
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v5

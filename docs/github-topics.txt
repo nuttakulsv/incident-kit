@@ -1,0 +1,21 @@
+Description (paste into the repository "About" box):
+Incident management that lives in a GitHub repo: declare with an issue form, update with slash commands, on-call rotation, Slack/Discord/Teams/LINE alerts, a status page on GitHub Pages and postmortem PRs. No servers.
+
+Website:
+https://nuttakulsv.github.io/incident-kit/
+
+Topics:
+incident-management
+incident-response
+status-page
+on-call
+postmortem
+sre
+devops
+github-actions
+github-pages
+chatops
+slack
+line
+tech-lead
+typescript

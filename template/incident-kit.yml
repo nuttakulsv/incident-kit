@@ -1,0 +1,41 @@
+# incident-kit configuration. Docs: https://github.com/nuttakulsv/incident-kit#configuration
+title: Acme Shop status
+description: Live status of Acme Shop services
+# url: https://status.example.com   # defaults to the GitHub Pages URL of this repository
+lang: en                    # en or th: comments, postmortems and the default language of the status page
+timezone: Asia/Bangkok
+
+services:
+  - id: website
+    name: Website
+  - id: api
+    name: Public API
+  - id: payments
+    name: Payments
+    description: PromptPay and cards
+  - id: line
+    name: LINE notifications
+
+severity:
+  reminders: { 1: 15, 2: 30 }   # minutes without a public update before the commander is reminded
+  public: [1, 2, 3]             # severities shown on the status page
+  postmortem: [1, 2]            # severities that get a postmortem pull request
+
+# oncall:
+#   rotation: [alice, bob, carol]   # GitHub usernames, one week each
+#   start: 2026-01-05              # date of the first handoff
+#   handoff: "10:00"               # same weekday every week, in the timezone above
+#   overrides:
+#     - user: dave
+#       from: 2026-10-05
+#       to: 2026-10-12
+
+# Each target reads its secret from an environment variable; pass it in .github/workflows/incident-kit.yml.
+# notifications:
+#   - type: slack                 # slack, discord, teams, line or webhook
+#     webhook: SLACK_WEBHOOK_URL
+#     severities: [1, 2, 3]
+#   - type: line
+#     token: LINE_CHANNEL_ACCESS_TOKEN
+#     to: LINE_TO
+#     severities: [1, 2]

@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+site
+_site
+*.log
+.DS_Store
+*.tgz

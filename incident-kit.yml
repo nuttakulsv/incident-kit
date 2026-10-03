@@ -1,0 +1,27 @@
+# This repository runs incident-kit on itself. Open an issue with the "Declare an incident" form to try it.
+# The status page also shows the fictional incidents from examples/demo/incidents.json.
+title: incident-kit demo status
+description: A live demo of incident-kit. The services and most incidents here are fictional.
+lang: en
+timezone: Asia/Bangkok
+
+services:
+  - id: website
+    name: Website
+  - id: api
+    name: Public API
+  - id: payments
+    name: Payments
+    description: PromptPay and cards
+  - id: line
+    name: LINE notifications
+
+severity:
+  reminders: { 1: 15, 2: 30 }
+  public: [1, 2, 3]
+  postmortem: [1, 2]
+
+oncall:
+  rotation: [nuttakulsv]
+  start: 2026-01-05
+  handoff: '10:00'
